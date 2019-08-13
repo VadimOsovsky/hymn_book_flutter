@@ -1,10 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hymnbook/data/app_db.dart';
-import 'package:hymnbook/screens/home/screens/hymn_editor/hymn_editor_android.dart';
+import 'package:hymnbook/screens/hymn_editor/hymn_editor_route.dart';
 
 class AddHymnAndroid extends StatelessWidget {
-
   _navigateToHymnEditor(BuildContext context, String hymnTitle) {
     final hymn = new Hymn(
       localId: null,
@@ -12,13 +11,12 @@ class AddHymnAndroid extends StatelessWidget {
       language: null,
       lyrics: "",
     );
-    Navigator.pushReplacement(
+    Navigator.pushNamed(
       context,
-      MaterialPageRoute(
-          builder: (context) => HymnEditorAndroid(hymn: hymn)),
+      HymnEditorRoute.name,
+      arguments: HymnEditorScreenArguments(hymn: hymn),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +47,7 @@ class AddHymnAndroid extends StatelessWidget {
                   hintText: "Hymn title...",
                   focusColor: Colors.black,
                   hintStyle:
-                  TextStyle(fontSize: titleSize, color: Colors.black26),
+                      TextStyle(fontSize: titleSize, color: Colors.black26),
                 ),
                 style: TextStyle(fontSize: titleSize),
               ),
@@ -59,10 +57,7 @@ class AddHymnAndroid extends StatelessWidget {
         RichText(
           text: TextSpan(
             text: "Didn't find what you were looking for? ",
-            style: Theme
-                .of(context)
-                .textTheme
-                .body1,
+            style: Theme.of(context).textTheme.body1,
             children: <TextSpan>[
               TextSpan(
                   text: 'Add new',
@@ -70,8 +65,8 @@ class AddHymnAndroid extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       decoration: TextDecoration.underline),
                   recognizer: TapGestureRecognizer()
-                    ..onTap = () =>
-                        _navigateToHymnEditor(context, titleCtrl.text)),
+                    ..onTap =
+                        () => _navigateToHymnEditor(context, titleCtrl.text)),
             ],
           ),
         ),
@@ -82,9 +77,7 @@ class AddHymnAndroid extends StatelessWidget {
     }
 
     return Container(
-      color: Theme
-          .of(context)
-          .scaffoldBackgroundColor,
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: SafeArea(
         child: Scaffold(
           body: Column(

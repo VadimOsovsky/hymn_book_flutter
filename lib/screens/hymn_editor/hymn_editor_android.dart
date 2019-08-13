@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hymnbook/data/app_db.dart';
-import 'package:hymnbook/screens/app_state.dart';
-import 'package:hymnbook/screens/home/screens/hymn_editor/tabs/hymn_info_tab.dart';
-import 'package:hymnbook/screens/home/screens/hymn_editor/tabs/lyrics_tab.dart';
+import 'package:hymnbook/screens/hymn_editor/state/hymn_editor_state.dart';
+import 'package:hymnbook/screens/hymn_editor/tabs/hymn_info_tab.dart';
+import 'package:hymnbook/screens/hymn_editor/tabs/lyrics_tab.dart';
 import 'package:provider/provider.dart';
-
-import 'hymn_editor_state.dart';
 
 class HymnEditorAndroid extends StatelessWidget {
   final Hymn hymn;
@@ -30,8 +28,9 @@ class HymnEditorAndroid extends StatelessWidget {
     final hymnEditorState = HymnEditorState();
     _initEditorTextFields(hymnEditorState);
 
-    return ChangeNotifierProvider(
-      builder: (context) => hymnEditorState,
+    return Provider(
+      builder: (_) => hymnEditorState,
+      dispose: (_, val) => val.dispose(),
       child: Container(
         color: Theme.of(context).primaryColor,
         child: SafeArea(
@@ -50,8 +49,7 @@ class HymnEditorAndroid extends StatelessWidget {
                       actions: <Widget>[
                         IconButton(
                           icon: Icon(Icons.done),
-                          onPressed: () => hymnEditorState.onDoneEditing(
-                              Provider.of<AppState>(context).db.hymnsDao),
+                          onPressed: () => hymnEditorState.onDoneEditing(),
                         ),
                       ],
                       bottom: TabBar(

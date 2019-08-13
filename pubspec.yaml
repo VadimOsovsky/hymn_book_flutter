@@ -20,9 +20,13 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # sqlite
   moor_flutter: ^1.6.0
+
+  # State management
+  mobx: 0.3.5
+  flutter_mobx: 0.3.0+1
   provider: ^3.0.0+1
-  equatable: ^0.3.0
 
   # UI
   badges: ^1.1.0
@@ -34,6 +38,7 @@ dev_dependencies:
     sdk: flutter
 
   moor_generator: ^1.6.0+2
+  mobx_codegen: 0.3.3+1
   build_runner: ^1.0.0
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

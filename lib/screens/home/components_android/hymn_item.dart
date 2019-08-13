@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hymnbook/data/app_db.dart';
 import 'package:hymnbook/data/hymns/hymns_table.dart';
-import 'package:hymnbook/screens/app_state.dart';
+import 'package:hymnbook/screens/home/state/home_state.dart';
 import 'package:provider/provider.dart';
 
-import '../home_state.dart';
 import 'hymn_cover_image.dart';
 
 class HymnItem extends StatelessWidget {
@@ -51,8 +50,7 @@ class HymnItem extends StatelessWidget {
           builder: _buildDeleteHymnDialog,
         ),
         onDismissed: (dir) {
-          _homeState.deleteFromSavedHymns(
-              Provider.of<AppState>(context).db.hymnsDao, hymn.localId);
+          _homeState.onDeleteFromSavedHymns(hymn.localId);
         },
         direction: DismissDirection.endToStart,
         child: ListTile(
@@ -62,7 +60,8 @@ class HymnItem extends StatelessWidget {
             style: TextStyle(fontSize: 18.0),
           ),
           subtitle: Text(
-            Hymns.formatLyricsForPreview(hymn.lyrics) ?? "No lyrics for this hymn...",
+            Hymns.formatLyricsForPreview(hymn.lyrics) ??
+                "No lyrics for this hymn...",
             maxLines: 2,
           ),
         ),

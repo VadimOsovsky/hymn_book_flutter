@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hymnbook/screens/home/components_android/hymn_cover_image.dart';
-import 'package:hymnbook/screens/home/screens/hymn_editor/dialogs/hymn_cover_image_dialog.dart';
+import 'package:hymnbook/screens/hymn_editor/dialogs/hymn_cover_image_dialog.dart';
+import 'package:hymnbook/screens/hymn_editor/state/hymn_editor_state.dart';
 import 'package:provider/provider.dart';
-
-import '../hymn_editor_state.dart';
 
 class HymnInfoTab extends StatelessWidget {
   Widget _buildImageDialog(BuildContext context, String initialImageUrl) {
@@ -29,8 +28,8 @@ class HymnInfoTab extends StatelessWidget {
             String result = await showDialog(
               barrierDismissible: false,
               context: context,
-              builder: (context) => _buildImageDialog(
-                  context, hymnEditorState.hymnCoverImage),
+              builder: (context) =>
+                  _buildImageDialog(context, hymnEditorState.hymnCoverImage),
             );
             if (result != null) hymnEditorState.hymnCoverImage = result;
           },

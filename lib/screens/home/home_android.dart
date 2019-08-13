@@ -1,14 +1,13 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:hymnbook/data/app_db.dart';
-import 'package:hymnbook/screens/app_state.dart';
-import 'package:hymnbook/screens/home/screens/add_hymn/add_hymn_android.dart';
-import 'package:hymnbook/ui/fade_route.dart';
+import 'package:hymnbook/screens/add_hymn/add_hymn_route.dart';
+import 'package:hymnbook/screens/home/state/home_state.dart';
+import 'package:hymnbook/store/app_state.dart';
 import 'package:provider/provider.dart';
 
 import 'components_android/hymn_item.dart';
 import 'delegates/search_hymns_delegate.dart';
-import 'home_state.dart';
 
 class HomeAndroid extends StatefulWidget {
   @override
@@ -26,11 +25,10 @@ class _HomeAndroidState extends State<HomeAndroid> {
 
   @override
   Widget build(BuildContext context) {
-    final hymnsDao = Provider.of<AppState>(context).db.hymnsDao;
     final notificationsNum = 3;
 
-    return ChangeNotifierProvider(
-      builder: (context) => _homeState,
+    return Provider(
+      builder: (_) => _homeState,
       child: Scaffold(
         body: CustomScrollView(slivers: <Widget>[
           SliverAppBar(
@@ -38,10 +36,9 @@ class _HomeAndroidState extends State<HomeAndroid> {
             snap: true,
             forceElevated: true,
             title: Text(
-              Provider.of<AppState>(context).appName,
+              SingletonStore.instance.appName,
               style: TextStyle(fontFamily: "Caveat", fontSize: 32.0),
             ),
-//              centerTitle: true,
             actions: <Widget>[
               IconButton(
                 icon: Icon(Icons.search),
@@ -53,15 +50,14 @@ class _HomeAndroidState extends State<HomeAndroid> {
             ],
           ),
           StreamBuilder<List<Hymn>>(
-            stream: hymnsDao.watchSavedHymns,
+            stream: _homeState.onWatchSavedHymns(),
             builder: _buildSavedHymns,
           ),
         ]),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           tooltip: "Add Hymn",
-          onPressed: () =>
-              Navigator.push(context, FadeRoute(page: AddHymnAndroid())),
+          onPressed: () => Navigator.pushNamed(context, AddHymnRoute.name),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
@@ -90,7 +86,9 @@ class _HomeAndroidState extends State<HomeAndroid> {
                   width: 30.0,
                 ),
                 Badge(
-                  shape: notificationsNum > 10 ? BadgeShape.square : BadgeShape.circle,
+                  shape: notificationsNum > 10
+                      ? BadgeShape.square
+                      : BadgeShape.circle,
                   borderRadius: 50,
                   showBadge: notificationsNum > 0,
                   badgeContent: Text(
@@ -98,7 +96,8 @@ class _HomeAndroidState extends State<HomeAndroid> {
                           ? "99+"
                           : notificationsNum.toString(),
                       style: TextStyle(color: Colors.white)),
-                  position: BadgePosition(right: notificationsNum > 99 ? -8 : 0, top: 0),
+                  position: BadgePosition(
+                      right: notificationsNum > 99 ? -8 : 0, top: 0),
                   child: IconButton(
                     iconSize: 30.0,
                     icon: Icon(Icons.notifications),

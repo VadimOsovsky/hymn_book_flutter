@@ -1,22 +1,26 @@
 import 'package:flutter/widgets.dart';
 import 'package:hymnbook/data/app_db.dart';
-import 'package:hymnbook/data/hymns/hymns_dao.dart';
+import 'package:hymnbook/store/app_state.dart';
+import 'package:mobx/mobx.dart';
 
-class HymnEditorState with ChangeNotifier {
+part 'hymn_editor_state.g.dart';
+
+class HymnEditorState = _HymnEditorState with _$HymnEditorState;
+
+abstract class _HymnEditorState with Store {
+
+  final _hymnsDao = SingletonStore.instance.db.hymnsDao;
+
   // for hymn info preview (not dialog)
-  String _hymnCoverImage = "";
-  String get hymnCoverImage => _hymnCoverImage;
-  set hymnCoverImage(value) {
-    _hymnCoverImage = value;
-    notifyListeners();
-  }
+  @observable
+  String hymnCoverImage = "";
 
   final hymnTitleCtrl = TextEditingController();
   final lyricsByCtrl = TextEditingController();
   final musicByCtrl = TextEditingController();
   final lyricsCtrl = TextEditingController();
-  
-  onDoneEditing(HymnsDao hymnsDao) {
+
+  onDoneEditing() {
     final hymn = new Hymn(
       localId: null,
       title: hymnTitleCtrl.text,
@@ -26,14 +30,13 @@ class HymnEditorState with ChangeNotifier {
       hymnCoverImage: hymnCoverImage,
       language: _setHymnLanguage(lyricsCtrl.text),
     );
-    
+
     print("VO: hymn, ${hymn}");
-//    hymnsDao.addToSavedHymns(hymn);
+//    _hymnsDao.addToSavedHymns(hymn);
   }
-  
+
   String _setHymnLanguage(lyrics) {
     // TODO
     return "en";
   }
-
 }

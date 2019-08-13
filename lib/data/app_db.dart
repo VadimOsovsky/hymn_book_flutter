@@ -35,6 +35,7 @@ class AppDatabase extends _$AppDatabase {
               lyrics: _getHymn2Lyrics(),
               lyricsBy: "Chris Tomlin",
               musicBy: "Chris Tomlin",
+              hymnCoverImage: "https://i.ytimg.com/vi/s592Pp5_8cY/hqdefault.jpg",
               language: "en"
           ));
         }

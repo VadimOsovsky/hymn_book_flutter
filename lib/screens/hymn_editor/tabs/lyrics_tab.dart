@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hymnbook/screens/hymn_editor/state/hymn_editor_state.dart';
 import 'package:provider/provider.dart';
-
-import '../hymn_editor_state.dart';
 
 class LyricsTab extends StatelessWidget {
   @override
@@ -13,9 +12,8 @@ class LyricsTab extends StatelessWidget {
         TextField(
           controller: hymnEditorState.lyricsCtrl,
           maxLines: null,
-          decoration: InputDecoration.collapsed(
-            hintText: "Enter lyrics here..."
-          ),
+          decoration:
+              InputDecoration.collapsed(hintText: "Enter lyrics here..."),
         )
       ],
     );
