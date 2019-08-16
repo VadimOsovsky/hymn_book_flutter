@@ -11,6 +11,7 @@ class LyricsTab extends StatelessWidget {
       children: <Widget>[
         TextField(
           controller: hymnEditorState.lyricsCtrl,
+          autofocus: true,
           maxLines: null,
           decoration:
               InputDecoration.collapsed(hintText: "Enter lyrics here..."),

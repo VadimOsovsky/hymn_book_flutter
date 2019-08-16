@@ -22,8 +22,8 @@ class Hymn extends DataClass implements Insertable<Hymn> {
       this.id,
       @required this.title,
       @required this.lyrics,
-      this.musicBy,
-      this.lyricsBy,
+      @required this.musicBy,
+      @required this.lyricsBy,
       this.hymnCoverImage,
       @required this.language,
       this.submittedBy});
@@ -246,8 +246,11 @@ class $HymnsTable extends Hymns with TableInfo<$HymnsTable, Hymn> {
   @override
   GeneratedTextColumn get musicBy => _musicBy ??= _constructMusicBy();
   GeneratedTextColumn _constructMusicBy() {
-    return GeneratedTextColumn('music_by', $tableName, true,
-        minTextLength: 1, maxTextLength: 100);
+    return GeneratedTextColumn(
+      'music_by',
+      $tableName,
+      false,
+    );
   }
 
   final VerificationMeta _lyricsByMeta = const VerificationMeta('lyricsBy');
@@ -255,8 +258,11 @@ class $HymnsTable extends Hymns with TableInfo<$HymnsTable, Hymn> {
   @override
   GeneratedTextColumn get lyricsBy => _lyricsBy ??= _constructLyricsBy();
   GeneratedTextColumn _constructLyricsBy() {
-    return GeneratedTextColumn('lyrics_by', $tableName, true,
-        minTextLength: 1, maxTextLength: 100);
+    return GeneratedTextColumn(
+      'lyrics_by',
+      $tableName,
+      false,
+    );
   }
 
   final VerificationMeta _hymnCoverImageMeta =

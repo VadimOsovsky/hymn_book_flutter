@@ -20,7 +20,7 @@ abstract class _HymnEditorState with Store {
   final musicByCtrl = TextEditingController();
   final lyricsCtrl = TextEditingController();
 
-  onDoneEditing() {
+  onDoneEditing({@required Function onSuccess}) async {
     final hymn = new Hymn(
       localId: null,
       title: hymnTitleCtrl.text,
@@ -31,8 +31,8 @@ abstract class _HymnEditorState with Store {
       language: _setHymnLanguage(lyricsCtrl.text),
     );
 
-    print("VO: hymn, ${hymn}");
-//    _hymnsDao.addToSavedHymns(hymn);
+    await _hymnsDao.addToSavedHymns(hymn);
+    onSuccess();
   }
 
   String _setHymnLanguage(lyrics) {

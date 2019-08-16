@@ -10,9 +10,9 @@ class Hymns extends Table {
   // TODO enhance lyrics
   TextColumn get lyrics => text().withLength(min: 1, max: 4000)();
 
-  TextColumn get musicBy => text().withLength(min: 1, max: 100).nullable()();
+  TextColumn get musicBy => text()();
 
-  TextColumn get lyricsBy => text().withLength(min: 1, max: 100).nullable()();
+  TextColumn get lyricsBy => text()();
 
   TextColumn get hymnCoverImage => text().nullable()();
 

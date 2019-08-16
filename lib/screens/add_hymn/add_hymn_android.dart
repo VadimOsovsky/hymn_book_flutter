@@ -42,7 +42,7 @@ class AddHymnAndroid extends StatelessWidget {
               child: TextField(
                 controller: titleCtrl,
                 textCapitalization: TextCapitalization.sentences,
-                autofocus: true,
+                autofocus: false,
                 decoration: InputDecoration(
                   hintText: "Hymn title...",
                   focusColor: Colors.black,

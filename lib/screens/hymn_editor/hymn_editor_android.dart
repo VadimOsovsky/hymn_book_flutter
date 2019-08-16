@@ -5,31 +5,47 @@ import 'package:hymnbook/screens/hymn_editor/tabs/hymn_info_tab.dart';
 import 'package:hymnbook/screens/hymn_editor/tabs/lyrics_tab.dart';
 import 'package:provider/provider.dart';
 
-class HymnEditorAndroid extends StatelessWidget {
+class HymnEditorAndroid extends StatefulWidget {
   final Hymn hymn;
 
   HymnEditorAndroid({@required this.hymn});
 
+  @override
+  _HymnEditorAndroidState createState() => _HymnEditorAndroidState();
+}
+
+class _HymnEditorAndroidState extends State<HymnEditorAndroid> {
   final List<Map<String, dynamic>> _tabs = [
     {"title": "Hymn info", "icon": Icons.info_outline, "tab": HymnInfoTab()},
     {"title": "Lyrics", "icon": Icons.text_fields, "tab": LyricsTab()},
   ];
 
-  _initEditorTextFields(HymnEditorState state) {
-    state.hymnCoverImage = hymn.hymnCoverImage;
-    state.hymnTitleCtrl.text = hymn.title ?? "";
-    state.lyricsByCtrl.text = hymn.lyricsBy ?? "";
-    state.musicByCtrl.text = hymn.musicBy ?? "";
-    state.lyricsCtrl.text = hymn.lyrics ?? "";
+  final _hymnEditorState = HymnEditorState();
+
+  @override
+  void initState() {
+    super.initState();
+    _initEditorTextFields();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _hymnEditorState.dispose();
+  }
+
+  _initEditorTextFields() {
+    _hymnEditorState.hymnCoverImage = widget.hymn.hymnCoverImage;
+    _hymnEditorState.hymnTitleCtrl.text = widget.hymn.title ?? "";
+    _hymnEditorState.lyricsByCtrl.text = widget.hymn.lyricsBy ?? "";
+    _hymnEditorState.musicByCtrl.text = widget.hymn.musicBy ?? "";
+    _hymnEditorState.lyricsCtrl.text = widget.hymn.lyrics ?? "";
   }
 
   @override
   Widget build(BuildContext context) {
-    final hymnEditorState = HymnEditorState();
-    _initEditorTextFields(hymnEditorState);
-
     return Provider(
-      builder: (_) => hymnEditorState,
+      builder: (_) => _hymnEditorState,
       dispose: (_, val) => val.dispose(),
       child: Container(
         color: Theme.of(context).primaryColor,
@@ -42,14 +58,19 @@ class HymnEditorAndroid extends StatelessWidget {
                     (BuildContext context, bool innerBoxIsScrolled) {
                   return <Widget>[
                     SliverAppBar(
-                      title:
-                          Text(hymn.localId != null ? "Edit hymn" : "Add hymn"),
+                      title: Text(widget.hymn.localId != null
+                          ? "Edit hymn"
+                          : "Add hymn"),
                       floating: true,
                       forceElevated: true,
                       actions: <Widget>[
                         IconButton(
                           icon: Icon(Icons.done),
-                          onPressed: () => hymnEditorState.onDoneEditing(),
+                          onPressed: () =>
+                              _hymnEditorState.onDoneEditing(onSuccess: () {
+                            Navigator.popUntil(
+                                context, (route) => route.isFirst);
+                          }),
                         ),
                       ],
                       bottom: TabBar(
