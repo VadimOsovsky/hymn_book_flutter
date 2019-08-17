@@ -23,8 +23,8 @@ Route onGenerateRoute(RouteSettings settings) {
       return FadeRoute(page: AddHymnAndroid());
 
     case HymnViewRoute.name:
-      final HymnEditorScreenArguments args = settings.arguments;
-      return FadeRoute(page: HymnViewAndroid(hymn: args.hymn));
+      final HymnViewScreenArgs args = settings.arguments;
+      return MaterialPageRoute(builder: (context) =>  HymnViewAndroid(hymn: args.hymn));
 
     default:
       return MaterialPageRoute(

@@ -2,12 +2,11 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:hymnbook/data/app_db.dart';
 import 'package:hymnbook/screens/add_hymn/add_hymn_route.dart';
+import 'package:hymnbook/screens/home/components_android/home_app_bar.dart';
 import 'package:hymnbook/screens/home/state/home_state.dart';
-import 'package:hymnbook/store/app_state.dart';
 import 'package:provider/provider.dart';
 
 import 'components_android/hymn_item.dart';
-import 'delegates/search_hymns_delegate.dart';
 
 class HomeAndroid extends StatefulWidget {
   @override
@@ -31,24 +30,7 @@ class _HomeAndroidState extends State<HomeAndroid> {
       builder: (_) => _homeState,
       child: Scaffold(
         body: CustomScrollView(slivers: <Widget>[
-          SliverAppBar(
-            floating: true,
-            snap: true,
-            forceElevated: true,
-            title: Text(
-              SingletonStore.instance.appName,
-              style: TextStyle(fontFamily: "Caveat", fontSize: 32.0),
-            ),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.search),
-                onPressed: () => showSearch(
-                  context: context,
-                  delegate: SearchHymnsDelegate(),
-                ),
-              )
-            ],
-          ),
+          HomeAppBar(),
           StreamBuilder<List<Hymn>>(
             stream: _homeState.onWatchSavedHymns(),
             builder: _buildSavedHymns,

@@ -6,8 +6,10 @@ class AppThemes {
 
   static get material => ThemeData(
         primarySwatch: _materialPrimaryColor,
+        primaryColorDark: Colors.teal[800],
+        primaryColorLight: Colors.tealAccent[700],
         errorColor: Colors.red,
-        cursorColor: _materialPrimaryColor,
+        selectedRowColor: Color(0xFFEEEEEE),
 //        textTheme: TextTheme(
 //          button: TextStyle(
 //            fontSize: 16.0,

@@ -17,7 +17,6 @@ class App extends StatelessWidget {
       return MaterialApp(
         title: _appState.appName,
         theme: AppThemes.material,
-        debugShowCheckedModeBanner: false,
         initialRoute: HomeRoute.name,
         onGenerateRoute: onGenerateRoute,
       );
@@ -25,7 +24,6 @@ class App extends StatelessWidget {
       return CupertinoApp(
         title: _appState.appName,
         theme: AppThemes.cupertino,
-        debugShowCheckedModeBanner: false,
         home: Center(child: Text('Hello World!')),
       );
     } else {

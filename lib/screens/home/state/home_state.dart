@@ -9,26 +9,25 @@ class HomeState = _HomeState with _$HomeState;
 abstract class _HomeState with Store {
   final _hymnsDao = SingletonStore.instance.db.hymnsDao;
 
+  @observable
+  Set<int> selectedHymnIds = new Set();
+
+  void onSelectHymn(int id) {
+    // reassigning to update the observable
+    final selectedIds = selectedHymnIds;
+    if (selectedHymnIds.contains(id)) {
+      selectedIds.remove(id);
+    } else {
+      selectedIds.add(id);
+    }
+    selectedHymnIds = selectedIds;
+  }
+
   Stream<List<Hymn>> onWatchSavedHymns() {
     return _hymnsDao.watchSavedHymns;
   }
 
   void onDeleteFromSavedHymns(int localId) async {
     await _hymnsDao.deleteFromSavedHymns(localId);
-  }
-
-  onCreateHymn() async {
-    final hymn = Hymn(
-      localId: null,
-      title: "Awesome God",
-      lyrics: "[Verse 1]\n" +
-          "When He rolls up His sleeves\n" +
-          "He ain't just putting on the ritz\n",
-      musicBy: "Rich Mullins",
-      lyricsBy: "Rich Mullins",
-      language: "en",
-    );
-
-    await _hymnsDao.addToSavedHymns(hymn);
   }
 }

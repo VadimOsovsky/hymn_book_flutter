@@ -61,8 +61,9 @@ class _HymnEditorAndroidState extends State<HymnEditorAndroid> {
                       title: Text(widget.hymn.localId != null
                           ? "Edit hymn"
                           : "Add hymn"),
-                      floating: true,
-                      forceElevated: true,
+//                      floating: true,
+//                      forceElevated: true,
+//                      snap: true,
                       actions: <Widget>[
                         IconButton(
                           icon: Icon(Icons.done),
